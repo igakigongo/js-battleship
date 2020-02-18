@@ -6,6 +6,16 @@
   - Write `unit tests` in JavaScript
   - Use a test runner such as `jest` to achieve the above goal
 
+  Summary of concepts that the developer should be familiar with at this point in time
+  
+  - Object Oriented Programming, 
+  - Objects, 
+  - Constructors, 
+  - Factory Functions, 
+  - The Module Pattern, 
+  - ES6 Notation, 
+  - Webpack and Testing with Jest.
+
 ## Getting Started
 
   - Clone this repository on your machine.
