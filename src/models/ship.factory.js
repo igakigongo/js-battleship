@@ -38,9 +38,7 @@ export default class Ship {
         this.positions.set(position, true);
         return;
       }
-      const nextValue = iterator.next();
-      done = nextValue.done;
-      value = nextValue.value;
+      ({ done, value } = iterator.next());
     }
     throw new Error(`Ship does not contain the position: ${position}`);
   }
