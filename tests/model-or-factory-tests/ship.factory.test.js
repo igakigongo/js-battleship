@@ -1,20 +1,40 @@
+import Coordinate from '../../src/models/coordinate';
 import Ship from '../../src/models/ship.factory';
 
 describe('ship factory', () => {
   it('throws an error if positions is not an array', () => {
     expect(() => new Ship()).toThrow();
-    expect(() => new Ship({})).toThrow('Expected an array of positions');
+    expect(() => new Ship({})).toThrow('Expected an array of coordinates');
   });
 
   it('throws an error if positions are empty', () => {
-    expect(() => new Ship([])).toThrow('Positions can not be empty');
+    expect(() => new Ship([])).toThrow('Coordinates can not be empty');
   });
 
-  it('throws an error if an array with a non integer is passed in', () => {
-    expect(() => new Ship([2, 5, 'x', 10])).toThrow();
+  it('throws an error if any position is not a coordinate', () => {
+    const coordinates = [
+      new Coordinate(0, 0),
+      {},
+    ];
+    expect(() => new Ship(coordinates)).toThrow('Invalid coordinate at index 1');
   });
 
-  it('creates a valid ship if all positions are numbers', () => {
-    expect(() => new Ship([1, 2, 3, 4])).not.toThrow();
+  it('should return true if ship occupies some coordinate', () => {
+    const coordinates = [
+      new Coordinate(0, 0),
+      new Coordinate(0, 1),
+      new Coordinate(0, 2),
+    ];
+    const ship = new Ship(coordinates);
+    expect(ship.occupiesGeoCoordinate(new Coordinate(0, 2))).toBe(true);
+  });
+
+  it('creates a valid ship if all positions are valid coordinates', () => {
+    const coordinates = [
+      new Coordinate(0, 0),
+      new Coordinate(0, 1),
+      new Coordinate(0, 2),
+    ];
+    expect(() => new Ship(coordinates)).not.toThrow();
   });
 });

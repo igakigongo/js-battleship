@@ -1,45 +1,50 @@
+import Coordinate from './coordinate';
+
 export default class Ship {
-  constructor(positions) {
-    if (Array.isArray(positions) === false) throw new Error('Expected an array of positions');
+  constructor(coordinates) {
+    if (!Array.isArray(coordinates)) throw new Error('Expected an array of coordinates');
 
-    if (positions.length === 0) throw new Error('Positions can not be empty');
+    if (coordinates.length === 0) throw new Error('Coordinates can not be empty');
 
-    for (let i = 0; i < positions.length;) {
-      if (typeof positions[i] !== 'number') {
-        throw new Error(`${positions[i]} is not a number`);
-      }
-      i += 1;
+    for (let i = 0; i < coordinates.length; i += 1) {
+      if (!(coordinates[i] instanceof Coordinate)) throw new Error(`Invalid coordinate at index ${i}`);
     }
 
-    const array = positions.map(p => [p, false]);
-    this.positions = new Map(array);
+    this.coordinates = coordinates;
+    this.destructionMap = new Map();
   }
 
   get isSunk() {
-    let sunk = true;
-    this.positions.forEach(value => {
-      sunk = sunk && value;
+    return this.coordinates.every(c => {
+      const { x, y } = c;
+      const sum = x + y;
+      return this.destructionMap.get(sum) === true;
     });
-    return sunk;
   }
 
   get length() {
-    let len = 0;
-    this.positions.forEach(() => { len += 1; });
-    return len;
+    return this.coordinates.length;
   }
 
-  hit(position) {
-    if (typeof position !== 'number') throw new Error(`${position} is not a number`);
-    const iterator = this.positions.keys();
-    let { value, done } = iterator.next();
-    while (!done) {
-      if (value === position) {
-        this.positions.set(position, true);
-        return;
-      }
-      ({ done, value } = iterator.next());
-    }
-    throw new Error(`Ship does not contain the position: ${position}`);
+  /**
+   * Determines if the ship occupies a certain coordinate
+   * @param {Coordinate} coordinate
+   */
+  occupiesGeoCoordinate(coordinate) {
+    return this.coordinates.some(c => c.equals(coordinate));
+  }
+
+  /**
+   * Hits the position on the ship that matches the specified coordinates
+   * @param {Coordinate} coordinate
+   */
+  hit(coordinate) {
+    if (!(coordinate instanceof Coordinate)) throw new Error('Invalid coordinate');
+
+    if (!this.occupiesGeoCoordinate(coordinate)) return;
+
+    const { x, y } = coordinate;
+    const sum = x + y;
+    this.destructionMap.set(sum, true);
   }
 }
