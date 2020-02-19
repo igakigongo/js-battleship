@@ -1,9 +1,13 @@
 import Ship from './ship.factory';
 
 export default class GameBoard {
-  constructor() {
+  constructor(size = 10) {
     this.missedAttacks = [];
     this.ships = [];
+    this.slots = new Array(size);
+    new Array(size).forEach((_, index) => {
+      this.slots[index] = new Array(size);
+    });
   }
 
   get allShipsSunk() {
