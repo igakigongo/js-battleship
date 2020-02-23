@@ -9,6 +9,7 @@
   "main": "./src/js/ui/app.js",
   "scripts": {
     "build": "webpack --mode=production",
+    "ci-test": "jest",
     "dev": "webpack --watch --mode=development",
     "test": "jest --watchAll"
   },
