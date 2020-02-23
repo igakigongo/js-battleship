@@ -1,4 +1,4 @@
-import Coordinate from '../../src/models/coordinate';
+import Coordinate from '../../src/js/models/coordinate';
 
 describe('coordinate', () => {
   it('should be equal for instances with same x and y values', () => {

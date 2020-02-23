@@ -1,5 +1,5 @@
-import Coordinate from '../../src/models/coordinate';
-import GameBoard from '../../src/models/game-board.factory';
+import Coordinate from '../../src/js/models/coordinate';
+import GameBoard from '../../src/js/models/game-board.factory';
 
 describe('game board api', () => {
   let board;

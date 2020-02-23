@@ -17,7 +17,7 @@ export default class ComputerPlayer extends Player {
     return new Coordinate(x, y);
   }
 
-  generateMove(gridSize) {
+  generateMove(gridSize = 10) {
     let coordinate = ComputerPlayer.generateCoordinate(gridSize);
     while (this.isMovePlayed(coordinate)) {
       coordinate = ComputerPlayer.generateCoordinate(gridSize);

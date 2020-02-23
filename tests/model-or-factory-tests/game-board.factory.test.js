@@ -1,4 +1,4 @@
-import GameBoard from '../../src/models/game-board.factory';
+import GameBoard from '../../src/js/models/game-board.factory';
 
 describe('game board factory', () => {
   it.only('creates a size x size board on creation', () => {

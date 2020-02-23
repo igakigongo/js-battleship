@@ -1,5 +1,5 @@
-import Coordinate from '../../src/models/coordinate';
-import Ship from '../../src/models/ship.factory';
+import Coordinate from '../../src/js/models/coordinate';
+import Ship from '../../src/js/models/ship.factory';
 
 describe('ship api', () => {
   let ship;

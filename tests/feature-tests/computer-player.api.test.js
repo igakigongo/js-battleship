@@ -1,5 +1,5 @@
-import ComputerPlayer from '../../src/models/computer-player';
-import Coordinate from '../../src/models/coordinate';
+import ComputerPlayer from '../../src/js/models/computer-player';
+import Coordinate from '../../src/js/models/coordinate';
 
 describe('computer player api', () => {
   let computer;
