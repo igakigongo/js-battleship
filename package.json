@@ -11,6 +11,7 @@
     "build": "webpack --mode=production",
     "ci-test": "jest",
     "dev": "webpack --watch --mode=development",
+    "serve": "webpack-dev-server --open",
     "test": "jest --watchAll"
   },
   "keywords": [],
@@ -35,6 +36,7 @@
     "sass-loader": "^8.0.2",
     "terser-webpack-plugin": "^2.3.4",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.3"
   }
 }

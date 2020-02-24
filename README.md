@@ -26,14 +26,18 @@
 
 The software does not have any prerequisites, but in case you need to modify it, then the following software should be present on you machine
 
-* [NPM](https://nodejs.org/en/) node package manage
-* [Visual Studio Code](https://code.visualstudio.com/) or any other modern IDE of your choice as long as it supports editing `HTML/CSS/JS` files
+  * [NPM](https://nodejs.org/en/) node package manage
+  * [Visual Studio Code](https://code.visualstudio.com/) or any other modern IDE of your choice as long as it supports editing `HTML/CSS/JS` files
 
-### Installing
+### Installing and/or Running the game
 
 For installation of the above listed software please visit their official websites for a quick start, since no custom settings are required. 
 
 For dependencies refer to the getting started section
+
+To run the game
+  - Make sure you have installed all dependencies
+  - Run this command `npm run serve` to open the game in the browser and start playing it
 
 ## Authors
 

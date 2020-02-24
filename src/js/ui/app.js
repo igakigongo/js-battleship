@@ -72,7 +72,7 @@ const game = (() => {
 
   function generateComputerClick() {
     const { x, y } = currentPlayer.generateMove();
-    const cell = computerGrid.querySelectorAll(`[data-x='${x}'][data-y='${y}']`)[0];
+    const cell = humanGrid.querySelectorAll(`[data-x='${x}'][data-y='${y}']`)[0];
     cell.click();
   }
 
@@ -95,6 +95,8 @@ const game = (() => {
   }
 
   async function handleClickMoveByComputer(e) {
+    if (humanBoard.allShipsSunk) return;
+
     const { target: targetElement } = e;
     if (currentPlayer instanceof HumanPlayer) {
       showNotificationOnLabel('Please wait for the human');
@@ -108,10 +110,15 @@ const game = (() => {
     const countOfMissedAttacks = humanBoard.missedAttacks.length;
     await markHitOrMiss(humanBoard, targetElement);
 
+    if (humanBoard.allShipsSunk) {
+      showNotificationOnLabel('Computer wins');
+      return;
+    }
+
     // Allow the computer to continue playing in case it did not miss
     if (countOfMissedAttacks === humanBoard.missedAttacks.length) {
       showNotificationOnLabel(`${getNextPlayerMessage(currentPlayer)} - Continue Playing`);
-      delay(generateComputerClick, 500);
+      delay(generateComputerClick, 250);
       return;
     }
 
@@ -120,6 +127,8 @@ const game = (() => {
   }
 
   async function handleClickMoveByHuman(e) {
+    if (computerBoard.allShipsSunk) return;
+
     const { target: targetElement } = e;
     if (currentPlayer instanceof ComputerPlayer) {
       showNotificationOnLabel('Please wait for the computer');
@@ -133,16 +142,21 @@ const game = (() => {
     const countOfMissedAttacks = computerBoard.missedAttacks.length;
     await markHitOrMiss(computerBoard, targetElement);
 
+    if (computerBoard.allShipsSunk) {
+      showNotificationOnLabel('You win');
+      return;
+    }
+
     // Allow the user to continue playing in case they did not miss
     if (countOfMissedAttacks === computerBoard.missedAttacks.length) {
       showNotificationOnLabel(`${getNextPlayerMessage(currentPlayer)} - Continue Playing`);
-      delay(() => {}, 500);
+      delay(() => {}, 250);
       return;
     }
 
     switchPlayer();
     showNotificationOnLabel(getNextPlayerMessage(currentPlayer));
-    delay(generateComputerClick, 500);
+    delay(generateComputerClick, 1000);
   }
 
   function drawGridOn(element) {
@@ -168,8 +182,8 @@ const game = (() => {
         return;
       }
 
-      const clickHandler = `${id}`.startsWith('computer') ? handleClickMoveByComputer
-        : handleClickMoveByHuman;
+      const clickHandler = `${id}`.startsWith('computer') ? handleClickMoveByHuman
+        : handleClickMoveByComputer;
 
       cell.addEventListener('click', clickHandler);
       cell.classList.add('border-bottom-only', 'clickable');
@@ -182,19 +196,15 @@ const game = (() => {
     });
   }
 
-  function createGrids() {
-    const grids = ['computer', 'human']
+  function init() {
+    grids = ['computer', 'human']
       .map(selector => document.querySelector(`#${selector}-grid .grid`));
     grids.forEach((grid) => { drawGridOn(grid); });
-    return grids;
-  }
 
-  function init() {
-    grids = createGrids();
     ([computerGrid, humanGrid] = grids);
 
     getComputerShips().forEach(ship => {
-      humanBoard.placeShipAt(ship.coordinates);
+      computerBoard.placeShipAt(ship.coordinates);
       ship.coordinates.forEach((coordinate) => {
         const { x, y } = coordinate;
         const cell = computerGrid.querySelectorAll(`[data-x='${x}'][data-y='${y}']`)[0];
@@ -203,7 +213,7 @@ const game = (() => {
     });
 
     getHumanShips().forEach(ship => {
-      computerBoard.placeShipAt(ship.coordinates);
+      humanBoard.placeShipAt(ship.coordinates);
       ship.coordinates.forEach((coordinate) => {
         const { x, y } = coordinate;
         const cell = humanGrid.querySelectorAll(`[data-x='${x}'][data-y='${y}']`)[0];
@@ -218,6 +228,5 @@ const game = (() => {
     initialize: init,
   };
 })();
-
 
 document.addEventListener('DOMContentLoaded', game.initialize);
