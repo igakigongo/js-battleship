@@ -4,8 +4,8 @@ import '../../assets/bomb.mp3';
 import ComputerPlayer from '../models/computer-player';
 import HumanPlayer from '../models/human-player';
 import GameBoard from '../models/game-board.factory';
-import Ship from '../models/ship.factory';
 import Coordinate from '../models/coordinate';
+import { getComputerShips, getHumanShips } from './data';
 
 const game = (() => {
   const [computer, human] = [new ComputerPlayer(), new HumanPlayer()];
@@ -15,73 +15,35 @@ const game = (() => {
   let currentPlayer = human;
   let grids;
 
-  function delay(callback, durationInMilliseconds) {
+  const delay = (callback, durationInMilliseconds) => {
     if ((typeof callback) !== 'function') return;
     setTimeout(() => { callback(); }, durationInMilliseconds);
-  }
+  };
 
-  function getComputerShips() {
-    return [
-      new Ship([new Coordinate(5, 0), new Coordinate(5, 1)]),
-      new Ship([new Coordinate(9, 1)]),
-      new Ship([new Coordinate(0, 2), new Coordinate(1, 2)]),
-      new Ship([new Coordinate(6, 3), new Coordinate(7, 3),
-        new Coordinate(8, 3), new Coordinate(9, 3)]),
-      new Ship([new Coordinate(5, 5), new Coordinate(6, 5)]),
-      new Ship([new Coordinate(9, 5)]),
-      new Ship([new Coordinate(1, 6), new Coordinate(1, 7),
-        new Coordinate(1, 8)]),
-      new Ship([new Coordinate(4, 7), new Coordinate(4, 8),
-        new Coordinate(4, 9)]),
-      new Ship([new Coordinate(6, 9)]),
-      new Ship([new Coordinate(9, 9)]),
-    ];
-  }
+  const getNextPlayerMessage = (player) => (player instanceof ComputerPlayer
+    ? "Computer's Turn" : 'Your Turn');
 
-  function getHumanShips() {
-    return [
-      new Ship([new Coordinate(6, 0)]),
-      new Ship([new Coordinate(0, 1), new Coordinate(1, 1),
-        new Coordinate(2, 1), new Coordinate(3, 1)]),
-      new Ship([new Coordinate(5, 2)]),
-      new Ship([new Coordinate(7, 2), new Coordinate(7, 3)]),
-      new Ship([new Coordinate(0, 3), new Coordinate(1, 3)]),
-      new Ship([new Coordinate(0, 5), new Coordinate(0, 6),
-        new Coordinate(0, 7)]),
-      new Ship([new Coordinate(8, 5)]),
-      new Ship([new Coordinate(5, 6)]),
-      new Ship([new Coordinate(7, 7), new Coordinate(8, 7)]),
-      new Ship([new Coordinate(3, 8), new Coordinate(4, 8),
-        new Coordinate(5, 8)]),
-    ];
-  }
-
-  function getNextPlayerMessage(player) {
-    return player instanceof ComputerPlayer ? "Computer's Turn"
-      : 'Your Turn';
-  }
-
-  function showNotificationOnLabel(message) {
+  const showNotificationOnLabel = (message) => {
     const label = document.querySelector('#notifications');
     label.textContent = message;
-  }
+  };
 
-  function switchPlayer() {
+  const switchPlayer = () => {
     currentPlayer = currentPlayer instanceof ComputerPlayer ? human : computer;
-  }
+  };
 
-  function generateComputerClick() {
+  const generateComputerClick = () => {
     const { x, y } = currentPlayer.generateMove();
     const cell = humanGrid.querySelectorAll(`[data-x='${x}'][data-y='${y}']`)[0];
     cell.click();
-  }
+  };
 
-  function cellIsAlreadyHitOrMissed(element) {
+  const cellIsAlreadyHitOrMissed = (element) => {
     const { classList, innerHTML: text } = element;
     return classList.contains('hit') || text === '\u2022';
-  }
+  };
 
-  async function markHitOrMiss(board, targetElement) {
+  const markHitOrMiss = async (board, targetElement) => {
     const { classList, dataset: { x, y } } = targetElement;
     board.receiveAttack(new Coordinate(+x, +y));
     if (classList.contains('ship-location')) {
@@ -92,9 +54,9 @@ const game = (() => {
       targetElement.innerHTML = '\u2022';
       await (new Audio('arrow.mp3')).play();
     }
-  }
+  };
 
-  async function handleClickMoveByComputer(e) {
+  const handleClickMoveByComputer = async (e) => {
     if (humanBoard.allShipsSunk) return;
 
     const { target: targetElement } = e;
@@ -124,9 +86,9 @@ const game = (() => {
 
     switchPlayer();
     showNotificationOnLabel(getNextPlayerMessage(currentPlayer));
-  }
+  };
 
-  async function handleClickMoveByHuman(e) {
+  const handleClickMoveByHuman = async (e) => {
     if (computerBoard.allShipsSunk) return;
 
     const { target: targetElement } = e;
@@ -157,9 +119,9 @@ const game = (() => {
     switchPlayer();
     showNotificationOnLabel(getNextPlayerMessage(currentPlayer));
     delay(generateComputerClick, 1000);
-  }
+  };
 
-  function drawGridOn(element) {
+  const drawGridOn = (element) => {
     const { id } = element.parentNode;
     const totalCells = 11 * 11;
     let x = 0;
@@ -194,9 +156,9 @@ const game = (() => {
       y += x % 10 === 0 ? 1 : 0;
       element.appendChild(cell);
     });
-  }
+  };
 
-  function init() {
+  const init = () => {
     grids = ['computer', 'human']
       .map(selector => document.querySelector(`#${selector}-grid .grid`));
     grids.forEach((grid) => { drawGridOn(grid); });
@@ -222,7 +184,7 @@ const game = (() => {
     });
 
     showNotificationOnLabel(getNextPlayerMessage(currentPlayer));
-  }
+  };
 
   return {
     initialize: init,
