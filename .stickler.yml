@@ -4,4 +4,8 @@ linters:
     
 files:
   ignore:
-      - 'dist/*'
+    - 'dist/*'
+    - 'jest.config.js'
+    - 'wallaby.conf.js'
+    - 'webpack.config.js'
+
