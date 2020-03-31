@@ -16,6 +16,18 @@
   - ES6 Notation, 
   - Webpack and Testing with Jest.
 
+## Features
+  - The game involves a human player versing a computer player
+  - Each player will set up ships on their board, upon finishing this the board is presented to the opponent
+  - During games play, the human player cannot see the ships
+  - The first to hit all ships on the opponent's board is presented as the winner
+
+## Desirable Features
+  - Allow 2 human players (remote/local) to play in the same game
+  - Maintain a scoreboard for different sessions
+  - Share scoreboards with friends on a social network
+  - Persist scoreboard data in a remote database or local storage
+
 ## Getting Started
 
   - Clone this repository on your machine.
@@ -46,3 +58,15 @@ To run the game
 ## License
 
 The project and all associated source code are free for redistribution and modification.
+
+## Demo 
+
+### Live Link
+
+For a live preview of the game please visit this [link](https://edward-battleship.netlify.com/).
+
+### Screenshots
+
+![Human Player Wins Against The Computer](battleship.png)
+
+#### Human Player Wins Against The Computer
