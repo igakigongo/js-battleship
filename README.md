@@ -15,18 +15,30 @@
   - The Module Pattern, 
   - ES6 Notation, 
   - Webpack and Testing with Jest.
+  
+## Demo 
+
+### Live Link
+
+For a live preview of the game please visit this [link](https://edward-battleship.netlify.com/).
+
+### Screenshots
+
+![Human Player Wins Against The Computer](battleship.png)
+
+#### Human Player Wins Against The Computer
 
 ## Features
-  - The game involves a human player versing a computer player
-  - Each player will set up ships on their board, upon finishing this the board is presented to the opponent
-  - During games play, the human player cannot see the ships
-  - The first to hit all ships on the opponent's board is presented as the winner
+  - In the game, a human player vs a computer player
+  - Each player sets up ships on their board. Upon finishing this the board is presented to the opponent
+  - During gameplay, the human player cannot see the ships on the board they are interacting with
+  - The first player to hit all ships on the opponent's board wins
 
 ## Desirable Features
   - Allow 2 human players (remote/local) to play in the same game
   - Maintain a scoreboard for different sessions
   - Share scoreboards with friends on a social network
-  - Persist scoreboard data in a remote database or local storage
+  - Store scoreboard data in a remote database or local storage
 
 ## Getting Started
 
@@ -55,18 +67,11 @@ To run the game
 
 * [**Edward Iga Kigongo**](github.com/igakigongo)
 
+## Contact
+* Email: igakigongo@gmail.com
+* LinkedIn: https://www.linkedin.com/in/igakigongo/
+* PluralSight: https://app.pluralsight.com/profile/edward-iga
+
 ## License
 
 The project and all associated source code are free for redistribution and modification.
-
-## Demo 
-
-### Live Link
-
-For a live preview of the game please visit this [link](https://edward-battleship.netlify.com/).
-
-### Screenshots
-
-![Human Player Wins Against The Computer](battleship.png)
-
-#### Human Player Wins Against The Computer
